@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.css';
 import Table from './components/Table';
-import MyContext from './components/MyContext';
+import StarWarsProvider from './context/StarWarsProvider';
 
 function App() {
   return (
-    <MyContext.Provider>
+    <StarWarsProvider>
       <div>
         <span>Hello, App!!</span>
         <Table />
       </div>
-    </MyContext.Provider>
+    </StarWarsProvider>
   );
 }
 

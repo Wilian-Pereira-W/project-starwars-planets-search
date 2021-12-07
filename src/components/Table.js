@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import getStarWarsApi from '../services/apiRequest';
+import React, { useContext } from 'react';
+import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const [planets, setPlanet] = useState([]);
-  useEffect(() => {
-    const getPlanets = async () => {
-      const results = await getStarWarsApi();
-      setPlanet(results);
-    };
-    getPlanets();
-  }, []);
+  const { planets } = useContext(StarWarsContext);
 
   return (
     <table>
