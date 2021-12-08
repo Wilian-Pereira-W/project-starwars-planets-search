@@ -7,7 +7,6 @@ function App() {
   return (
     <StarWarsProvider>
       <div>
-        <span>Hello, App!!</span>
         <Table />
       </div>
     </StarWarsProvider>

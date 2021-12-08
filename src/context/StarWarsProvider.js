@@ -5,6 +5,8 @@ import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
   const [planets, setPlanet] = useState([]);
+  const [newName, setNewName] = useState('');
+
   useEffect(() => {
     const getPlanets = async () => {
       const results = await getStarWarsApi();
@@ -12,8 +14,13 @@ function StarWarsProvider({ children }) {
     };
     getPlanets();
   }, []);
+
+  const handleChange = ({ target }) => {
+    setNewName(target.value);
+  };
+
   return (
-    <StarWarsContext.Provider value={ { planets } }>
+    <StarWarsContext.Provider value={ { planets, newName, handleChange } }>
       {children}
     </StarWarsContext.Provider>
   );
