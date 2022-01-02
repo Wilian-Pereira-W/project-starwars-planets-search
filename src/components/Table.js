@@ -2,9 +2,16 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { planets, newName, handleChange } = useContext(StarWarsContext);
-  const filterName = planets.filter((nome) => nome.name.includes(newName));
-
+  const {
+    newName,
+    handleChange,
+    setColumn,
+    setComparison,
+    setValue,
+    handleClick,
+    newValue,
+    planetsFilter,
+  } = useContext(StarWarsContext);
   return (
     <div>
       <form>
@@ -17,6 +24,49 @@ function Table() {
             onChange={ handleChange }
           />
         </label>
+      </form>
+      <form>
+        <label htmlFor="column-filter">
+          <select
+            data-testid="column-filter"
+            id="column-filter"
+            onChange={ (event) => setColumn(event.target.value) }
+          >
+            <option value="population">population</option>
+            <option value="orbital_period">orbital_period</option>
+            <option value="diameter">diameter</option>
+            <option value="rotation_period">rotation_period</option>
+            <option value="surface_water">surface_water</option>
+          </select>
+        </label>
+        <label htmlFor="comparison-filter">
+          <select
+            data-testid="comparison-filter"
+            id="comparison-filter"
+            onChange={ (event) => setComparison(event.target.value) }
+          >
+            <option value="maior que">maior que</option>
+            <option value="menor que">menor que</option>
+            <option value="igual a">igual a</option>
+          </select>
+        </label>
+        <label htmlFor="value-filter">
+          <input
+            data-testid="value-filter"
+            type="number"
+            id="value-filter"
+            value={ newValue }
+            onChange={ (event) => setValue(event.target.value) }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ handleClick }
+        >
+          Filtrar
+
+        </button>
       </form>
       <table>
         <thead>
@@ -37,7 +87,8 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {filterName.map((planet) => (
+
+          {planetsFilter.map((planet) => (
             <tr key={ planet.name }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period}</td>
