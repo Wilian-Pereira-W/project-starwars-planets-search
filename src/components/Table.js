@@ -11,6 +11,7 @@ function Table() {
     handleClick,
     newValue,
     planetsFilter,
+    selectFilter,
   } = useContext(StarWarsContext);
   return (
     <div>
@@ -26,18 +27,18 @@ function Table() {
         </label>
       </form>
       <form>
+
         <label htmlFor="column-filter">
           <select
             data-testid="column-filter"
             id="column-filter"
             onChange={ (event) => setColumn(event.target.value) }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            { selectFilter.map((option) => (
+              <option key={ option } value={ option }>{option}</option>
+            ))}
           </select>
+
         </label>
         <label htmlFor="comparison-filter">
           <select
@@ -68,6 +69,7 @@ function Table() {
 
         </button>
       </form>
+
       <table>
         <thead>
           <tr>

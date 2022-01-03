@@ -12,9 +12,14 @@ function StarWarsProvider({ children }) {
   const [filterByNumericValues, setfilterByNumericValues] = useState([{
     column: 'population',
     comparison: 'maior que',
-    value: '100000',
+    newValue: 0,
   }]);
   const [planetsFilter, setPlanetFilter] = useState([]);
+  const [selectFilter, setSelectFilter] = useState(['population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water']);
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -32,22 +37,30 @@ function StarWarsProvider({ children }) {
   const handleChange = ({ target }) => {
     setNewName(target.value);
   };
+
+  const notRepeatFilter = (colum) => {
+    const newSelectFilter = selectFilter.filter((select) => select !== colum);
+    setSelectFilter(newSelectFilter);
+  };
   const handleClick = () => {
     if (filterByNumericValues.comparison === 'maior que') {
       setPlanetFilter(planets.filter(
         (planet) => Number(planet[filterByNumericValues.column])
        > Number(filterByNumericValues.value),
       ));
+      notRepeatFilter(filterByNumericValues.column);
     } else if (filterByNumericValues.comparison === 'menor que') {
       setPlanetFilter(planets.filter(
         (planet) => Number(planet[filterByNumericValues.column])
        < Number(filterByNumericValues.value),
       ));
+      notRepeatFilter(filterByNumericValues.column);
     } else {
       setPlanetFilter(planets.filter(
         (planet) => Number(planet[filterByNumericValues.column])
        === Number(filterByNumericValues.value),
       ));
+      notRepeatFilter(filterByNumericValues.column);
     }
   };
   return (
@@ -62,6 +75,7 @@ function StarWarsProvider({ children }) {
         handleClick,
         planetsFilter,
         newValue,
+        selectFilter,
       } }
     >
       {children}
